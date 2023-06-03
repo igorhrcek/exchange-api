@@ -28,7 +28,7 @@ class AccountTest extends TestCase
         $this->assertEquals($account->balance, 1000);
     }
 
-    public function test_given_user_id_and_same_currency_id_multiple_times_when_creating_account_it_will_not_create_account() {
+    public function test_given_user_id_and_same_currency_id_multiple_times_when_creating_account_it_will_not_create_account(): void {
         $account = Account::factory()->create();
 
         $this->expectException(QueryException::class);
@@ -40,7 +40,7 @@ class AccountTest extends TestCase
         ]);
     }
 
-    public function test_not_given_user_id_when_creating_account_it_will_cause_database_exception() {
+    public function test_not_given_user_id_when_creating_account_it_will_cause_database_exception(): void {
         $this->expectException(QueryException::class);
 
         Account::create([
@@ -50,7 +50,7 @@ class AccountTest extends TestCase
         ]);
     }
 
-    public function test_not_given_currency_id_when_creating_account_it_will_cause_database_exception() {
+    public function test_not_given_currency_id_when_creating_account_it_will_cause_database_exception(): void {
         $this->expectException(QueryException::class);
 
         Account::create([
@@ -60,7 +60,7 @@ class AccountTest extends TestCase
         ]);
     }
 
-    public function test_not_given_uuid_when_creating_account_it_will_cause_database_exception() {
+    public function test_not_given_uuid_when_creating_account_it_will_cause_database_exception(): void {
         $this->expectException(QueryException::class);
 
         Account::create([
@@ -70,7 +70,7 @@ class AccountTest extends TestCase
         ]);
     }
 
-    public function test_not_given_staring_balance_when_creating_account_it_will_cause_database_exception() {
+    public function test_not_given_staring_balance_when_creating_account_it_will_cause_database_exception(): void {
         $this->expectException(QueryException::class);
 
         Account::create([
@@ -80,7 +80,7 @@ class AccountTest extends TestCase
         ]);
     }
 
-    public function test_given_negative_starting_balance_when_creating_account_it_will_cause_database_excepction() {
+    public function test_given_negative_starting_balance_when_creating_account_it_will_cause_database_excepction(): void {
         $this->expectException(QueryException::class);
 
         Account::create([
