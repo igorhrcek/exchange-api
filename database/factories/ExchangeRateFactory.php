@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Currency;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,9 @@ class ExchangeRateFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'from_currency_id' => Currency::factory()->create()->id,
+            'to_currency_id' => Currency::factory()->create()->id,
+            'rate' => fake()->numberBetween(1, 5)
         ];
     }
 }

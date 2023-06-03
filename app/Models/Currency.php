@@ -12,6 +12,15 @@ class Currency extends Model
     use HasFactory;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'code'
+    ];
+
+    /**
      * Get all accounts with a given currency
      *
      * @return BelongsToMany
