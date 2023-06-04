@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -23,6 +24,13 @@ class User extends Authenticatable
         'email',
         'password'
     ];
+
+    /**
+     * Auto load relations
+     *
+     * @var array
+     */
+    protected $with = array('accounts');
 
     /**
      * The attributes that should be hidden for serialization.
@@ -47,9 +55,9 @@ class User extends Authenticatable
     /**
      * Associate account with a user
      *
-     * @return HasOne
+     * @return HasMany
      */
-    public function account(): HasOne {
-        return $this->hasOne(Account::class);
+    public function accounts(): HasMany {
+        return $this->hasMany(Account::class);
     }
 }
