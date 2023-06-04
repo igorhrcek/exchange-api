@@ -32,9 +32,17 @@ class Handler extends ExceptionHandler
                 ], 404);
             }
 
+            //Fail if transaction reference provided is incorrect
             if ($request->is('api/transaction/*')) {
                 return response()->json([
                     'message' => 'Transaction not found.'
+                ], 404);
+            }
+
+            //Fail if account UUID provided is incorrect
+            if ($request->is('api/transactions/*')) {
+                return response()->json([
+                    'message' => 'Account not found.'
                 ], 404);
             }
         });
