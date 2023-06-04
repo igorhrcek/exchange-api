@@ -27,5 +27,5 @@ Route::middleware('auth:sanctum')->get('/accounts', [AccountController::class, '
 Route::middleware('auth:sanctum')->get('/account/{account:uuid}', [AccountController::class, 'show']);
 
 Route::middleware('auth:sanctum')->post('/transaction', [TransactionController::class, 'store']);
-Route::middleware('auth:sanctum')->get('/transactions', [TransactionController::class, 'index']);
+Route::middleware('auth:sanctum')->get('/transactions/{account:uuid?}', [TransactionController::class, 'index']);
 Route::middleware('auth:sanctum')->get('/transaction/{reference}', [TransactionController::class, 'show']);
