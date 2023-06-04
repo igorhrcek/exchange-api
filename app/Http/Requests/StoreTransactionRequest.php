@@ -28,7 +28,7 @@ class StoreTransactionRequest extends FormRequest
         return [
             'source_account_id' => ["bail", "required", "exists:accounts,id", new AccountOwnershipRule],
             'destination_account_id' => ["bail", "required", "exists:accounts,id", "different:source_account_id", new AccountOwnershipRule],
-            'amount' => ["bail", "required", "decimal:10,2", new ExchangeTransationAmountRule]
+            'amount' => ["bail", "required", "numeric", new ExchangeTransationAmountRule]
         ];
     }
 
@@ -59,7 +59,7 @@ class StoreTransactionRequest extends FormRequest
             'destination_account_id.exists' => 'Provided account does not exist',
             'destination_account_id.different' => 'Destination account cannot be same as source account',
             'amount.required' => 'Transfer amount is required',
-            'amount.decimal' => 'Transfer amount must be in decimal format'
+            'amount.decimal' => 'Transfer amount must be a number'
         ];
     }
 }
