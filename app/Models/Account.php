@@ -25,6 +25,13 @@ class Account extends Model
     ];
 
     /**
+     * Auto load relations
+     *
+     * @var array
+     */
+    protected $with = array('currency', 'transactions');
+
+    /**
      * Get the user that owns the account
      *
      * @return BelongsTo
@@ -49,5 +56,13 @@ class Account extends Model
      */
     public function transactions(): HasMany {
         return $this->hasMany(Transaction::class);
+    }
+
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'uuid';
     }
 }

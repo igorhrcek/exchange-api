@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\AccountCurrency;
+use App\Rules\AccountWithCurrencyExistRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Contracts\Validation\Validator;
 
 class StoreAccountRequest extends FormRequest
 {
@@ -12,7 +14,7 @@ class StoreAccountRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +25,33 @@ class StoreAccountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'currency_id' => ["required", new AccountCurrency]
+            'currency_id' => ["required", "exists:currencies,id", new AccountWithCurrencyExistRule]
+        ];
+    }
+
+    /**
+     * Return error if validation fails
+     *
+     * @param Validator $validator
+     * @return void
+     */
+    public function failedValidation(Validator $validator) {
+        throw new HttpResponseException(response()->json([
+            'success'   => false,
+            'message'   => 'Validation errors',
+            'data'      => $validator->errors()
+        ]));
+    }
+
+    /**
+     * Custom error messages
+     *
+     * @return array
+     */
+    public function messages(): array {
+        return [
+            'currency_id.required' => 'Currency is required',
+            'currency_id.exists' => 'Provided currency does not exist'
         ];
     }
 }
