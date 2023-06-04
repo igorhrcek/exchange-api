@@ -23,7 +23,7 @@ class AccountFactory extends Factory
             'user_id' => User::factory()->create()->id,
             'currency_id' => Currency::factory()->create()->id,
             'uuid' => Str::uuid(),
-            'balance' => fake()->numberBetween(1, 5000)
+            'balance' => fake()->numberBetween(2000, 15000)
         ];
     }
 }
