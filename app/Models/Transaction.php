@@ -29,4 +29,14 @@ class Transaction extends Model
     public function account(): BelongsTo {
         return $this->belongsTo(Account::class);
     }
+
+    /**
+     * Disable updated_at timestamping
+     *
+     * @param mixed $value
+     * @return void
+     */
+    public function setUpdatedAt($value) {
+    }
+
 }

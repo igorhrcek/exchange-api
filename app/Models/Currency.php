@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Currency extends Model
 {
@@ -34,7 +35,7 @@ class Currency extends Model
      *
      * @return HasOne
      */
-    public function exchangeRate(): HasOne {
-        return $this->hasOne(ExchangeRate::class);
+    public function exchangeRate(): HasMany {
+        return $this->hasMany(ExchangeRate::class, 'from_currency_id');
     }
 }
