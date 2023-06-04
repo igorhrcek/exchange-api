@@ -35,8 +35,7 @@ class UserController extends Controller
      */
     public function show(Request $request)
     {
-        dd($request->user());
-        // return new UserResource($request->user());
+        //
     }
 
     /**
