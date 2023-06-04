@@ -57,6 +57,7 @@ class StoreTransactionRequest extends FormRequest
             'source_account_id.exists' => 'Provided account does not exist',
             'destination_account_id.required' => 'Source account is required',
             'destination_account_id.exists' => 'Provided account does not exist',
+            'destination_account_id.different' => 'Destination account cannot be same as source account',
             'amount.required' => 'Transfer amount is required',
             'amount.decimal' => 'Transfer amount must be in decimal format'
         ];
