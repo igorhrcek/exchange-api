@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Builder;
 
 class Transaction extends Model
 {
@@ -37,6 +38,18 @@ class Transaction extends Model
      * @return void
      */
     public function setUpdatedAt($value) {
+        //
+    }
+
+    /**
+     * Scope a query to return transactions that belong to a reference
+     *
+     * @param Builder $query
+     * @param string $reference
+     * @return void
+     */
+    public function scopeReference(Builder $query, string $reference): void {
+        $query->where('reference', '=', $reference);
     }
 
 }
