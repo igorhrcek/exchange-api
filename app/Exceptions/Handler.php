@@ -3,7 +3,9 @@
 namespace App\Exceptions;
 
 use Throwable;
+use Illuminate\Http\Response;
 use App\Exceptions\NotEnoughBalanceException;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -25,6 +27,13 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
+        $this->renderable(function (ValidationException  $e, $request) {
+            return response()->json([
+                'success' => false,
+                'errors' => $e->errors(),
+            ], Response::HTTP_BAD_REQUEST);
+        });
+
         $this->renderable(function (NotFoundHttpException $e, $request) {
             if ($request->is('api/account/*')) {
                 return response()->json([

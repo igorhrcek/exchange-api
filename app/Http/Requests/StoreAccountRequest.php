@@ -30,20 +30,6 @@ class StoreAccountRequest extends FormRequest
     }
 
     /**
-     * Return error if validation fails
-     *
-     * @param Validator $validator
-     * @return void
-     */
-    public function failedValidation(Validator $validator) {
-        throw new HttpResponseException(response()->json([
-            'success'   => false,
-            'message'   => 'Validation errors',
-            'data'      => $validator->errors()
-        ]));
-    }
-
-    /**
      * Custom error messages
      *
      * @return array
