@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
@@ -17,17 +20,23 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        //
+        $user = User::create([
+            'email' => $request->email,
+            'name' => $request->name
+        ]);
+
+        return new UserResource($user);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request)
     {
-        //
+        dd($request->user());
+        // return new UserResource($request->user());
     }
 
     /**
