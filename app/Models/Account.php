@@ -32,6 +32,13 @@ class Account extends Model
     protected $with = array('currency', 'transactions');
 
     /**
+     * Define primary key
+     *
+     * @var string
+     */
+    protected $primaryKey = 'id';
+
+    /**
      * Get the user that owns the account
      *
      * @return BelongsTo
