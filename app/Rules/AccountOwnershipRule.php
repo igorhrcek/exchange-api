@@ -18,7 +18,7 @@ class AccountOwnershipRule implements ValidationRule
     {
         $user = Auth::user();
 
-        if (Account::get($value)->user_id !== $user->id) {
+        if (!collect($user->accounts)->contains('id', $value)) {
             $fail('The account belongs to another user. You are not authorized to do this transaction.');
         }
     }
