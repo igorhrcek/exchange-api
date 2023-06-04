@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Throwable;
+use App\Exceptions\NotEnoughBalanceException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -30,6 +31,18 @@ class Handler extends ExceptionHandler
                     'message' => 'Account not found.'
                 ], 404);
             }
+
+            if ($request->is('api/transaction/*')) {
+                return response()->json([
+                    'message' => 'Transaction not found.'
+                ], 404);
+            }
+        });
+
+        $this->renderable(function (NotEnoughBalanceException $e, $request) {
+            return response()->json([
+                'message' => 'You do not have enough balance on the account.'
+            ], 400);
         });
     }
 }
