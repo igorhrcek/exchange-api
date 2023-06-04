@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Account;
 use Illuminate\Http\Request;
+use App\Services\AccountExchangeTransaction;
 
 class TransactionController extends Controller
 {
@@ -19,7 +21,11 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $transaction = new AccountExchangeTransaction(
+            Account::get($request->source_account_id),
+            Account::get($request->destination_account_id),
+            $request->amount
+        );
     }
 
     /**
