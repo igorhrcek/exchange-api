@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedMediumInteger('account_id')->index();
             $table->string('reference', 20);
-            $table->unsignedDecimal('amount', 10, 2);
+            $table->decimal('amount', 10, 2);
             $table->timestamp('created_at')->useCurrent();
         });
     }
