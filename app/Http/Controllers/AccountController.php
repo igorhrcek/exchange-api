@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
@@ -19,7 +20,9 @@ class AccountController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = User::create($request);
+
+        print_r($user);
     }
 
     /**
