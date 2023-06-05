@@ -52,4 +52,11 @@ class Transaction extends Model
         $query->where('reference', '=', $reference);
     }
 
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'reference';
+    }
 }
