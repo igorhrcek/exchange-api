@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Account;
 use App\Models\Currency;
 use Laravel\Sanctum\Sanctum;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -59,5 +60,27 @@ class AccountApiTest extends TestCase
 
         $response->assertStatus(400);
         $response->assertInvalid(['currency_id']);
+    }
+
+    public function test_given_account_uuid_when_calling_show_account_api_account_information_will_be_returned(): void {
+        $user = User::factory()->create();
+        $account = Account::factory()->create(['user_id' => $user->id]);
+        Sanctum::actingAs($user, ['*']);
+
+        $response = $this->get(route('account.show', ['account' => $account->uuid->toString()]));
+
+        $response->assertValid();
+        $response->assertStatus(200)
+                ->assertJsonPath('data.currency_id', $account->id)
+                ->assertJsonPath('data.user_id', $user->id)
+                ->assertJsonPath('data.uuid', $account->uuid->toString());
+    }
+
+    public function test_given_incorrect_account_uuid_when_calling_show_account_api_account_information_will_not_be_returned(): void {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user, ['*']);
+
+        $response = $this->get(route('account.show', ['account' => '12345']));
+        $response->assertStatus(404);
     }
 }
