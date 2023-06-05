@@ -17,7 +17,7 @@ class UserTest extends TestCase
     public function test_given_email_and_name_when_calling_store_user_api_it_will_create_user(): void
     {
         $email = fake()->email();
-        $name = fake()->firstName() . " " . fake()->lastName();
+        $name = "John Doe";
 
         $response = $this->post(route('user.create'), [
             'email' => $email,
