@@ -18,7 +18,7 @@ class AccountWithCurrencyExistRule implements ValidationRule
     {
         $user = Auth::user();
 
-        if (collect($user->accounts)->contains('currency_id', $value)) {
+        if (Account::where('currency_id', '=', $value)->where('user_id', '=', $user->id)->count() !== 0) {
             $fail('Account with this currency already exist.');
         }
     }

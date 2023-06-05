@@ -22,9 +22,9 @@ Route::get('/currency', [CurrencyController::class, 'index'])->name('currency.ge
 
 Route::post('/user', [UserController::class, 'store'])->name('user.create');
 
-Route::middleware('auth:sanctum')->post('/account', [AccountController::class, 'store']);
-Route::middleware('auth:sanctum')->get('/accounts', [AccountController::class, 'index']);
-Route::middleware('auth:sanctum')->get('/account/{account:uuid}', [AccountController::class, 'show']);
+Route::middleware('auth:sanctum')->post('/account', [AccountController::class, 'store'])->name('account.create');
+Route::middleware('auth:sanctum')->get('/accounts', [AccountController::class, 'index'])->name('account.index');
+Route::middleware('auth:sanctum')->get('/account/{account:uuid}', [AccountController::class, 'show'])->name('account.show');
 
 Route::middleware('auth:sanctum')->post('/transaction', [TransactionController::class, 'store']);
 Route::middleware('auth:sanctum')->get('/transactions/{account:uuid?}', [TransactionController::class, 'index']);
