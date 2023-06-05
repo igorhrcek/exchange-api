@@ -128,7 +128,7 @@ class TransactionApiTest extends TestCase
             'amount' => -800
         ]);
 
-        $response->assertStatus(422);
+        $response->assertStatus(400);
     }
 
     public function test_given_amount_that_is_bigger_than_balance_when_calling_create_transaction_api_transaction_will_not_be_created(): void {
