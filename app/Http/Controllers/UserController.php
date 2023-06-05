@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreUserRequest;
 use App\Http\Resources\UserResource;
+use App\Http\Requests\StoreUserRequest;
 
 class UserController extends Controller
 {
@@ -24,7 +25,8 @@ class UserController extends Controller
     {
         $user = User::create([
             'email' => $request->email,
-            'name' => $request->name
+            'name' => $request->name,
+            'password' => Str::password(20)
         ]);
 
         return new UserResource($user);
