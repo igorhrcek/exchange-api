@@ -22,6 +22,13 @@ class Currency extends Model
     ];
 
     /**
+     * Auto load relations
+     *
+     * @var array
+     */
+    protected $with = array('exchangeRate');
+
+    /**
      * Get all accounts with a given currency
      *
      * @return BelongsToMany
