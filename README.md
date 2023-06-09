@@ -1,66 +1,152 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Exchange API Demo App
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Demo currency exchange app
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Authentication
+Once token is issues for a user you can authencitace with the API by passing `Authroziation` header:
+```
+Authorization: Bearer __token__
+```
+## Currency API
+### Get all currencies
+Endpoint URL (GET): `/api/currency`
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```
+curl "API_URL/api/currency" \
+     -H 'Authorization: Bearer TOKEN' \
+     -H 'Accept: application/json'
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## User API
+### Create User
+Endpoint URL (POST): `/api/user`
 
-## Learning Laravel
+Parameters:
+| Parameter     | Required                       | Type     |
+|---------------|-------------------------------|-----------|
+| email         | Yes                           | string    |
+| name          | Yes                           | string    |
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```
+curl -X "POST" "https://currency-exchange.ddev.site/api/user" \
+     -H 'Content-Type: application/json; charset=utf-8' \
+     -d $'{
+  "email": "email@example.com",
+  "name": "Joe Jobson"
+}'
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Get User
+Endpoint URL (GET): `/api/user`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```
+curl "https://currency-exchange.ddev.site/api/user" \
+     -H 'Authorization: Bearer 3|tneGFNLuMYGgHbTKEIXy2g7WukVTL5pcFPHQBFHs' \
+     -H 'Accept: application/json'
+```
 
-## Laravel Sponsors
+## Account API
+### Create Account
+Endpoint URL (POST): `/api/account`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Parameters:
+| Parameter     | Required                       | Type     |
+|---------------|-------------------------------|-----------|
+| currency_id   | Yes                           | int    |
 
-### Premium Partners
+```
+curl -X "POST" "https://currency-exchange.ddev.site/api/account" \
+     -H 'Authorization: Bearer 3|tneGFNLuMYGgHbTKEIXy2g7WukVTL5pcFPHQBFHs' \
+     -H 'Accept: application/json' \
+     -H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8' \
+     --data-urlencode "currency_id=2"
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+### Get Single Account
+Endpoint URL (GET): `/api/account/{uuid}`
 
-## Contributing
+**Parameters:**
+| Parameter     | Required                       | Type     |
+|---------------|------------------------ |-----------|
+| uuid   | Yes                           | string    |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+curl "https://currency-exchange.ddev.site/api/account/ce8ecc17-c2a9-4027-91a0-a870d530b26ea" \
+     -H 'Accept: application/json' \
+     -H 'Authorization: Bearer 3|tneGFNLuMYGgHbTKEIXy2g7WukVTL5pcFPHQBFHs'
+```
 
-## Code of Conduct
+### Get All Accounts
+Endpoint URL (GET): `/api/accounts`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```
+curl "https://currency-exchange.ddev.site/api/accounts" \
+     -H 'Accept: application/json' \
+     -H 'Authorization: Bearer 3|tneGFNLuMYGgHbTKEIXy2g7WukVTL5pcFPHQBFHs'
+```
 
-## Security Vulnerabilities
+## Transaction API
+### Create Transaction
+Endpoint URL (POST): `/api/transaction`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+**Parameters:**
+| Parameter     | Required                       | Type     |
+|---------------|-------------------------------|-----------|
+| source_account_id   | Yes                           | int    |
+| destination_account_id   | Yes                           | int    |
+| amount   | Yes                           | float    |
 
-## License
+```
+curl -X "POST" "https://currency-exchange.ddev.site/api/transaction" \
+     -H 'Accept: application/json' \
+     -H 'Authorization: Bearer 3|tneGFNLuMYGgHbTKEIXy2g7WukVTL5pcFPHQBFHs' \
+     -H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8' \
+     --data-urlencode "source_account_id=1" \
+     --data-urlencode "destination_account_id=2" \
+     --data-urlencode "amount=500"
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Get all transactions
+Endpoint URL (GET): `/api/transaction/{?uuid}`
+
+**Parameters:**
+| Parameter     | Required                       | Type     |
+|---------------|-------------------------------|-----------|
+| uuid   | No                           | string    |
+You can pass account UUID if you want to filter transactions by account.
+
+**Query parameters:**
+| Parameter     | Required                       | Type     |
+|---------------|-------------------------------|-----------|
+| offset   | No                           | int    |
+| limit   | No                           | int    |
+
+```
+curl "https://currency-exchange.ddev.site/api/transactions" \
+     -H 'Accept: application/json' \
+     -H 'Authorization: Bearer 3|tneGFNLuMYGgHbTKEIXy2g7WukVTL5pcFPHQBFHs' \
+     -H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8'
+
+curl "https://currency-exchange.ddev.site/api/transactions/ce8ecc17-c2a9-4027-91a0-a870d530b26ea?limit=5" \
+     -H 'Accept: application/json' \
+     -H 'Authorization: Bearer 3|tneGFNLuMYGgHbTKEIXy2g7WukVTL5pcFPHQBFHs' \
+     -H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8'
+```
+
+### Get single transaction
+Endpoint URL (GET): `/api/transaction/{reference}`
+
+**Parameters:**
+| Parameter     | Required                       | Type     |
+|---------------|-------------------------------|-----------|
+| reference   | yes                           | string    |
+You can pass account UUID if you want to filter transactions by account.
+
+
+```
+curl "https://currency-exchange.ddev.site/api/transaction/V0V95VICFMM02FW5E6QE" \
+     -H 'Accept: application/json' \
+     -H 'Authorization: Bearer 3|tneGFNLuMYGgHbTKEIXy2g7WukVTL5pcFPHQBFHs' \
+     -H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8'
+```
